@@ -397,7 +397,16 @@ class AllzoneChatbot {
     const slot = formData.get('slot') || (isAr ? 'غداً الساعة 10:00 صباحاً' : 'Tomorrow at 10:00 AM EST');
     const projectType = (this.engine.leadData && this.engine.leadData.projectType) || (isAr ? 'بنية وهندسة أنظمة الذكاء الاصطناعي' : 'AI Systems & Architecture');
 
-    const card = form.closest('.inchat-booking-card');
+    if (this.engine) {
+      this.engine.consultationStage = 'CONFIRMED';
+      if (!this.engine.leadData) this.engine.leadData = {};
+      this.engine.leadData.fullName = name;
+      this.engine.leadData.email = email;
+      this.engine.leadData.phone = phone;
+      this.engine.leadData.slot = slot;
+    }
+
+    const card = form.closest ? form.closest('.inchat-booking-card') : null;
     if (card) {
       if (isAr) {
         card.innerHTML = `
@@ -545,9 +554,13 @@ class AllzoneChatbot {
   }
 
   escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 
   openConsultationModal() {
@@ -595,7 +608,10 @@ In the meantime, feel free to explore our multi-agent case studies or ask any te
   }
 }
 
-// Global hook
+// Global hook & CommonJS export
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = AllzoneChatbot;
+}
 if (typeof window !== 'undefined') {
   window.AllzoneChatbot = AllzoneChatbot;
 }
