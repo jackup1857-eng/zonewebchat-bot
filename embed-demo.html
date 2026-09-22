@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Embed Demo | Allzone AI Chatbot Widget</title>
+  <meta name="description" content="Demonstration of the embeddable Allzone Technologies AI Chatbot floating widget on a customer or corporate website." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .hero-section {
+      max-width: 900px;
+      margin: 80px auto 40px;
+      text-align: center;
+      padding: 2rem;
+    }
+    .hero-badge {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      background: rgba(20, 102, 255, 0.15);
+      border: 1px solid rgba(20, 102, 255, 0.35);
+      color: var(--az-cyan);
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, #ffffff 40%, var(--az-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+    .code-box {
+      background: rgba(11, 17, 32, 0.9);
+      border: 1px solid var(--border-active);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      text-align: left;
+      margin: 2rem auto;
+      max-width: 720px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .code-box pre {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: #38bdf8;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+    .features-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      text-align: left;
+    }
+    .feature-card h3 {
+      font-size: 1.05rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .feature-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <!-- Ambient Glows -->
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <a href="index.html" class="brand-wrapper">
+      <div class="brand-logo-badge">AZ</div>
+      <div class="brand-info">
+        <h1>Allzone Technologies <span class="status-badge">Embed Mode</span></h1>
+        <p>Widget Integration Showcase</p>
+      </div>
+    </a>
+    <a href="index.html" class="btn-primary-sm" id="btn-back-to-full">
+      ← Return to Full Demo
+    </a>
+  </header>
+
+  <main class="hero-section">
+    <div class="hero-badge">⚡ Plug & Play Chatbot Widget</div>
+    <h1 class="hero-title">Embed Allzone's AI Assistant on Any Website</h1>
+    <p class="hero-subtitle">
+      Give your visitors instant answers to questions regarding multi-agent architectures, AI voice agents, RAG knowledge systems, and custom software.
+    </p>
+
+    <div class="code-box">
+      <div style="font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-dim); margin-bottom:0.75rem;">
+        Copy & Paste into any HTML Page:
+      </div>
+      <pre>&lt;!-- 1. Include Stylesheet --&gt;
+&lt;link rel="stylesheet" href="css/style.css" /&gt;
+
+&lt;!-- 2. Include Knowledge Base & Scripts --&gt;
+&lt;script src="data/knowledge_base.js"&gt;&lt;/script&gt;
+&lt;script src="js/knowledge-engine.js"&gt;&lt;/script&gt;
+&lt;script src="js/allzone-bot.js"&gt;&lt;/script&gt;
+&lt;script src="js/embed-widget.js"&gt;&lt;/script&gt;</pre>
+    </div>
+
+    <p style="color:var(--text-muted); font-size:0.9rem;">
+      👉 <strong>Look at the bottom right corner of this screen!</strong> Click the floating blue button to launch the Allzone AI assistant drawer.
+    </p>
+
+    <div class="features-row">
+      <div class="feature-card">
+        <h3>🤖 Multi-Agent Aware</h3>
+        <p>Accurately explains orchestration, tool execution, and human guardrails based on Allzone's production engineering practices.</p>
+      </div>
+      <div class="feature-card">
+        <h3>⚡ Zero Setup / Zero Lag</h3>
+        <p>100% in-browser semantic retrieval engine that works out of the box with zero external API dependencies or key configurations.</p>
+      </div>
+      <div class="feature-card">
+        <h3>📅 Direct Lead Capture</h3>
+        <p>Converts interested prospects directly into technical discovery workshops and consultation inquiries.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Embed Scripts -->
+  <script src="data/knowledge_base.js"></script>
+  <script src="js/knowledge-engine.js"></script>
+  <script src="js/allzone-bot.js"></script>
+  <script src="js/embed-widget.js"></script>
+</body>
+</html>

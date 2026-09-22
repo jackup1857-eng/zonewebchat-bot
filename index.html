@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Allzone AI Chat | Ask Anything About Allzone Services & Multi-Agent AI</title>
+  <meta name="description" content="Direct AI chat interface for Allzone Technologies. Ask anything about multi-agent systems, AI voice agents, RAG platforms, enterprise software, and engineering services." />
+  <meta name="keywords" content="Allzone Technologies, AI Chatbot, Multi-Agent Systems, Agentic AI, AI Voice Agents, RAG, Enterprise Software, Irshad Kanwal" />
+  <meta name="theme-color" content="#060911" />
+  <link rel="icon" href="https://www.allzonetech.com/brand/allzone-logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="single-window-mode">
+  <!-- Subtle Ambient Glows -->
+  <div class="ambient-glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow-2" aria-hidden="true"></div>
+
+  <div id="app-root">
+    <!-- Top Header -->
+    <header class="app-header single-header">
+      <div class="header-inner">
+        <a href="https://www.allzonetech.com/" target="_blank" rel="noopener noreferrer" class="brand-wrapper" id="header-brand-link">
+          <div class="brand-logo-badge">AZ</div>
+          <div class="brand-info">
+            <h1>Allzone AI Assistant <span class="status-badge"><span class="status-dot"></span> Online</span></h1>
+            <p>Multi-Agent Systems · Voice AI · RAG · Enterprise Software</p>
+          </div>
+        </a>
+
+        <div class="header-actions">
+          <div class="lang-selector-group" role="group" aria-label="Language Selector">
+            <button type="button" class="lang-pill-btn active" id="lang-btn-en" title="English">🇺🇸 EN</button>
+            <button type="button" class="lang-pill-btn" id="lang-btn-ar" title="العربية">🇸🇦 العربية</button>
+          </div>
+          <button type="button" class="btn-icon" id="btn-toggle-sound" title="Mute/Unmute Sound" aria-label="Toggle Sound">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+          </button>
+          <button type="button" class="btn-icon" id="btn-clear-chat" title="New Conversation" aria-label="New Conversation" onclick="location.reload()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <polyline points="23 20 23 14 17 14"></polyline>
+              <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+            </svg>
+          </button>
+          <button type="button" class="btn-primary-sm" id="btn-header-consultation" onclick="window.allzoneChatbot.openConsultationModal()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Book Consultation
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Single Chat Window -->
+    <main class="single-chat-layout">
+      <div class="chat-container single-window">
+        <!-- Messages Viewport -->
+        <div class="messages-viewport" id="chat-messages" role="log" aria-live="polite">
+          <!-- Dynamic Conversation Stream -->
+        </div>
+
+        <!-- Quick Starter Chips Bar -->
+        <div class="chips-container" id="quick-chips" aria-label="Suggested Prompts">
+          <!-- Dynamic Prompt Chips -->
+        </div>
+
+        <!-- Sleek Prompt Input Form -->
+        <div class="chat-input-area single-input-area">
+          <form class="input-form" id="chat-form">
+            <button type="button" class="btn-mic" id="btn-voice-input" title="Voice Input (Speech-to-Text)" aria-label="Voice Input">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+              </svg>
+            </button>
+            <input 
+              type="text" 
+              id="user-input" 
+              class="chat-input" 
+              placeholder="Ask anything about Allzone's services, multi-agent systems, voice AI, tech stack..." 
+              autocomplete="off" 
+              required
+              autofocus
+            />
+            <button type="submit" class="btn-send" id="btn-send-message" title="Send question" aria-label="Send Message">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </form>
+          <div class="input-disclaimer">
+            Allzone AI answers are grounded in <a href="https://www.allzonetech.com/" target="_blank" rel="noopener noreferrer">Allzone Technologies</a> official documentation and real-world architectures.
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal: Book Technical Discovery Session / Lead Form -->
+  <div class="modal-backdrop" id="lead-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-title">🚀 Book a Technical Discovery Session</h2>
+        <button type="button" class="modal-close-btn" onclick="window.allzoneChatbot.closeConsultationModal()" aria-label="Close dialog">✕</button>
+      </div>
+      <form id="consultation-form">
+        <div class="form-group">
+          <label for="lead-fullname">Your Full Name *</label>
+          <input type="text" id="lead-fullname" name="fullName" class="form-control" placeholder="e.g. Alex Rivera" required />
+        </div>
+        <div class="form-group">
+          <label for="lead-email">Work Email *</label>
+          <input type="email" id="lead-email" name="email" class="form-control" placeholder="alex@company.com" required />
+        </div>
+        <div class="form-group">
+          <label for="lead-phone">Phone / WhatsApp Number</label>
+          <input type="tel" id="lead-phone" name="phone" class="form-control" placeholder="+1 (408) 850-5081" />
+        </div>
+        <div class="form-group">
+          <label for="lead-service">Area of Interest</label>
+          <select id="lead-service" name="serviceType" class="form-control">
+            <option value="Agentic AI & Multi-Agent Systems">🤖 Agentic AI & Multi-Agent Systems</option>
+            <option value="AI Voice Agents & Telephony">🎙️ AI Voice Agents & Telephony</option>
+            <option value="RAG & Enterprise Knowledge Systems">🔍 RAG & Knowledge Retrieval Systems</option>
+            <option value="Enterprise Software & ERP/CRM">🏢 Enterprise Software & Platforms</option>
+            <option value="Hire Dedicated AI/ML Engineers">👥 Hire Dedicated ML Engineers / Staff Aug</option>
+            <option value="Cloud Infrastructure & FinOps">☁️ Cloud Management & FinOps</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="lead-details">Tell us about what you want to build</label>
+          <textarea id="lead-details" name="projectDetails" class="form-control" placeholder="Brief overview of workflow, constraints, timeline, or current challenges..."></textarea>
+        </div>
+        <button type="submit" class="btn-submit-lead" id="btn-submit-consultation">Submit Project Inquiry 🚀</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="data/knowledge_base.js"></script>
+  <script src="js/knowledge-engine.js"></script>
+  <script src="js/allzone-bot.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.allzoneChatbot = new AllzoneChatbot({
+        containerId: 'chat-messages',
+        inputId: 'user-input',
+        chipsId: 'quick-chips',
+        isWidget: false
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "allzoneweb-agent",
+  "version": "1.0.0",
+  "description": "Allzone Technologies AI Services Chatbot Web Application with Multi-Agent Systems knowledge",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 server.py",
+    "test": "node test_engine.js"
+  },
+  "keywords": [
+    "allzone",
+    "chatbot",
+    "multi-agent",
+    "agentic-ai",
+    "voice-ai",
+    "rag"
+  ],
+  "author": "Allzone Technologies",
+  "license": "MIT"
+}
