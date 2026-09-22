@@ -69,6 +69,29 @@ class AllzoneKnowledgeEngine {
       };
     }
 
+    if (!userQuery || !userQuery.trim() || /^[?.,!؟\s]+$/.test(userQuery.trim())) {
+      if (this.lang === 'ar' || this.isArabic(userQuery)) {
+        return {
+          text: "أهلاً بك! 👋 كيف يمكنني مساعدتك في استكشاف حلول **أولزون تكنولوجيز** لأنظمة الذكاء الاصطناعي والوكلاء المتعددين؟ يمكنك كتابة سؤالك أو اختيار أحد الخيارات أدناه:",
+          chips: [
+            "🤖 أنظمة الوكلاء المتعددين",
+            "🎙️ وكلاء الصوت بالذكاء الاصطناعي",
+            "🔍 أنظمة استرجاع المعرفة RAG",
+            "📅 حجز موعد مع مدير المبيعات"
+          ]
+        };
+      }
+      return {
+        text: "Hello! 👋 How can I help you explore **Allzone Technologies** AI engineering and multi-agent solutions today? Feel free to ask any question or choose an option below:",
+        chips: [
+          "🤖 Multi-Agent Systems",
+          "🎙️ AI Voice Agents",
+          "🔍 RAG Knowledge Systems",
+          "📅 Schedule Strategy Call"
+        ]
+      };
+    }
+
     const query = userQuery.trim().toLowerCase();
     this.history.push({ role: 'user', content: userQuery });
 
@@ -243,6 +266,9 @@ class AllzoneKnowledgeEngine {
     const isDirectQuestion = norm.startsWith('ما ') || norm.startsWith('ماذا') || norm.startsWith('اين') ||
                              norm.startsWith('من ') || norm.startsWith('كيف') || norm.startsWith('هل') ||
                              norm.startsWith('حدثني') || norm.startsWith('اشرح') || norm.startsWith('اريد ان اعرف') ||
+                             norm.startsWith('ايش ') || norm.startsWith('وش ') || norm.startsWith('شو ') ||
+                             norm.startsWith('ايه ') || norm.startsWith('ابغي') || norm.startsWith('ابغى') ||
+                             norm.startsWith('بدي') || norm.startsWith('عاوز') ||
                              norm.includes('خدماتكم') || norm.includes('مكاتبكم') || norm.includes('اسعاركم') ||
                              norm.includes('دراسات');
 
@@ -327,7 +353,9 @@ class AllzoneKnowledgeEngine {
       norm.includes('خدماتكم') || norm.includes('خدمات') || norm.includes('ماذا تقدمون') ||
       norm.includes('ماذا تعملون') || norm.includes('مجالات عملكم') || norm.includes('تخصصاتكم') ||
       norm.includes('حلولكم') || norm.includes('ما هي خدمات') || norm.includes('مجالاتكم') ||
-      norm.includes('ما هي الخدمات')
+      norm.includes('ما هي الخدمات') || norm.includes('تسوون') || norm.includes('بتعملو') ||
+      norm.includes('بتساوو') || norm.includes('بتشتغلو') || norm.includes('شو بتقدمو') ||
+      norm.includes('وش تقدمون') || norm.includes('وش عندكم') || norm.includes('ايش عندكم')
     ) {
       return {
         text: `### 🚀 الخدمات والحلول الهندسية لشركة أولزون تكنولوجيز (Allzone Technologies)

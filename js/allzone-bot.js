@@ -133,35 +133,65 @@ class AllzoneChatbot {
       });
     }
 
-    if (this.micBtn && ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+    if (this.micBtn && typeof window !== 'undefined' && ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognition = new SpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = false;
 
+      let prevPlaceholder = '';
+
       this.micBtn.addEventListener('click', () => {
         if (this.micBtn.classList.contains('listening')) {
           recognition.stop();
           this.micBtn.classList.remove('listening');
+          if (this.inputElement && prevPlaceholder) {
+            this.inputElement.placeholder = prevPlaceholder;
+          }
         } else {
+          recognition.lang = this.currentLang === 'ar' ? 'ar-SA' : 'en-US';
           this.micBtn.classList.add('listening');
-          recognition.start();
+          if (this.inputElement) {
+            prevPlaceholder = this.inputElement.placeholder;
+            this.inputElement.placeholder = this.currentLang === 'ar'
+              ? '🎙️ جاري الاستماع بصوتك... تحدث الآن'
+              : '🎙️ Listening to your voice... Speak now';
+          }
+          try {
+            recognition.start();
+          } catch (err) {
+            this.micBtn.classList.remove('listening');
+            if (this.inputElement && prevPlaceholder) {
+              this.inputElement.placeholder = prevPlaceholder;
+            }
+          }
         }
       });
 
       recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        this.inputElement.value = transcript;
+        const transcript = event.results && event.results[0] && event.results[0][0] ? event.results[0][0].transcript : '';
+        if (transcript) {
+          this.inputElement.value = transcript;
+          this.handleUserSubmit();
+        }
         this.micBtn.classList.remove('listening');
-        this.handleUserSubmit();
+        if (this.inputElement && prevPlaceholder) {
+          this.inputElement.placeholder = prevPlaceholder;
+        }
       };
 
       recognition.onerror = () => {
         this.micBtn.classList.remove('listening');
+        if (this.inputElement && prevPlaceholder) {
+          this.inputElement.placeholder = prevPlaceholder;
+        }
       };
 
       recognition.onend = () => {
         this.micBtn.classList.remove('listening');
+        if (this.inputElement && prevPlaceholder) {
+          this.inputElement.placeholder = prevPlaceholder;
+        }
       };
     } else if (this.micBtn) {
       this.micBtn.style.display = 'none';
@@ -366,6 +396,14 @@ class AllzoneChatbot {
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
       </div>
       <div class="message-bubble">
+        <div class="bubble-header-actions">
+          <button type="button" class="btn-tts-speak" title="${isAr ? 'الاستماع للرد صوتياً' : 'Listen to voice response'}" aria-label="Listen to voice response" onclick="window.allzoneChatbot.speakText(this)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+          </button>
+        </div>
         ${formattedHtml}
         ${bookingCardHtml}
         ${linksHtml}
@@ -378,8 +416,38 @@ class AllzoneChatbot {
     this.scrollToBottom();
   }
 
+  speakText(btn) {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+      if (btn.classList.contains('speaking')) {
+        btn.classList.remove('speaking');
+        return;
+      }
+    }
+
+    document.querySelectorAll('.btn-tts-speak.speaking').forEach(b => b.classList.remove('speaking'));
+
+    const bubble = btn.closest ? btn.closest('.message-bubble') : null;
+    if (!bubble) return;
+
+    const textToSpeak = (bubble.innerText || bubble.textContent || '').replace(/[\n\r]+/g, ' ').substring(0, 450);
+    const isAr = this.currentLang === 'ar' || /[\u0600-\u06FF]/.test(textToSpeak);
+
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    utterance.lang = isAr ? 'ar-SA' : 'en-US';
+    utterance.rate = 1.0;
+
+    btn.classList.add('speaking');
+    utterance.onend = () => btn.classList.remove('speaking');
+    utterance.onerror = () => btn.classList.remove('speaking');
+
+    window.speechSynthesis.speak(utterance);
+  }
+
   selectSlot(btn, slotText) {
-    const parent = btn.closest('.inchat-booking-card');
+    const parent = btn.closest ? btn.closest('.inchat-booking-card') : null;
     if (!parent) return;
     parent.querySelectorAll('.slot-pill-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
@@ -486,7 +554,10 @@ class AllzoneChatbot {
 
   showTypingIndicator() {
     const existing = document.getElementById('typing-indicator-row');
-    if (existing) existing.remove();
+    if (existing) {
+      if (typeof existing.remove === 'function') existing.remove();
+      else if (existing.parentNode) existing.parentNode.removeChild(existing);
+    }
 
     const row = document.createElement('div');
     row.className = 'message-row bot';
@@ -507,7 +578,10 @@ class AllzoneChatbot {
 
   hideTypingIndicator() {
     const existing = document.getElementById('typing-indicator-row');
-    if (existing) existing.remove();
+    if (existing) {
+      if (typeof existing.remove === 'function') existing.remove();
+      else if (existing.parentNode) existing.parentNode.removeChild(existing);
+    }
   }
 
   scrollToBottom() {

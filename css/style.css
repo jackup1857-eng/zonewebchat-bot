@@ -658,6 +658,52 @@ html, body {
   100% { transform: scale(1); }
 }
 
+/* Voice Text-to-Speech Button */
+.bubble-header-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.2rem;
+}
+
+.btn-tts-speak {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-dim);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  padding: 0;
+}
+
+.btn-tts-speak:hover {
+  background: rgba(20, 102, 255, 0.2);
+  color: var(--az-cyan);
+  border-color: var(--az-blue);
+  transform: scale(1.08);
+}
+
+.btn-tts-speak.speaking {
+  color: #10b981;
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.15);
+  animation: pulse-speaker 1.2s infinite;
+}
+
+@keyframes pulse-speaker {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+[dir="rtl"] .bubble-header-actions {
+  justify-content: flex-start;
+}
+
 /* Typing Indicator */
 .typing-bubble {
   display: flex;
